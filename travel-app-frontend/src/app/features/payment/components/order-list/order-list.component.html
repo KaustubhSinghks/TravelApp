@@ -1,0 +1,44 @@
+<app-navbar></app-navbar>
+<div class="orders-container">
+  <header class="page-header">
+    <h1>My Orders</h1>
+    <p>A history of all your payments and transactions.</p>
+  </header>
+
+  <div class="orders-content card" *ngIf="!isLoading">
+    <div class="table-responsive">
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>Payment ID</th>
+            <th>Trip ID</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders">
+            <td>#{{ order.paymentId }}</td>
+            <td>{{ order.tripId }}</td>
+            <td>{{ order.paymentTimestamp | date:'medium' }}</td>
+            <td>₹{{ order.amount | number:'1.2-2' }}</td>
+            <td><span class="badge" [ngClass]="order.paymentStatus">{{ order.paymentStatus }}</span></td>
+            <td>
+              <button class="btn-download" (click)="downloadInvoice(order.paymentId)"
+                [disabled]="isDownloading[order.paymentId] || order.paymentStatus !== 'SUCCESS'">
+                <span *ngIf="isDownloading[order.paymentId]">Downloading...</span>
+                <span *ngIf="!isDownloading[order.paymentId]">Download Invoice</span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="orders.length === 0" class="empty-state">
+      <h2>No orders found.</h2>
+      <p>Your payment history will appear here once you complete a booking.</p>
+    </div>
+  </div>
+</div>

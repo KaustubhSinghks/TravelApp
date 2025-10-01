@@ -1,0 +1,51 @@
+<div class="hotel-search-container">
+  <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="search-form">
+    <!-- Changed to a dropdown -->
+    <select formControlName="destination">
+      <option value="" disabled>Select a city</option>
+      <option *ngFor="let city of availableCities" [value]="city">{{ city | titlecase }}</option>
+    </select>
+    <button type="submit" [disabled]="searchForm.invalid">Search Hotels</button>
+  </form>
+
+  <div class="hotel-results-grid" *ngIf="searched">
+    <div *ngFor="let hotel of hotels" class="hotel-card">
+      <div class="hotel-image" [style.backgroundImage]="'url(' + hotel.imageUrl + ')'"></div>
+      <div class="hotel-content">
+        <h3>{{ hotel.name }}</h3>
+        <p>{{ hotel.location }}</p>
+        <div class="hotel-footer">
+          <span class="rating">★ {{ hotel.rating }}</span>
+          <span class="price">₹{{ hotel.pricePerNight }}/night</span>
+        </div>
+        <button class="btn-book" (click)="openBookingModal(hotel)">Book Now</button>
+      </div>
+    </div>
+    <div *ngIf="hotels.length === 0" class="no-results">
+      <h3>No hotels found for this destination.</h3>
+      <p>Try searching for a different city.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Booking Confirmation Modal -->
+<div class="modal-overlay" *ngIf="selectedHotel">
+  <div class="modal-content">
+    <h3>Confirm Booking</h3>
+    <p>You are booking <strong>{{ selectedHotel.name }}</strong>.</p>
+    <div class="form-group">
+      <label for="trip-select">Add to which trip?</label>
+      <select id="trip-select" [(ngModel)]="selectedTripId">
+        <option [ngValue]="null" disabled>Select a trip</option>
+        <!-- Now uses the filtered list of trips -->
+        <option *ngFor="let trip of filteredTrips" [value]="trip.tripId">{{ trip.title }}</option>
+      </select>
+      <small *ngIf="filteredTrips.length === 0">You have no trips planned for this city. Please create one
+        first.</small>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" (click)="closeBookingModal()">Cancel</button>
+      <button class="btn btn-primary" (click)="confirmBooking()" [disabled]="!selectedTripId">Confirm & Book</button>
+    </div>
+  </div>
+</div>

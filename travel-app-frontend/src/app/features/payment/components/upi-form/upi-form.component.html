@@ -1,0 +1,20 @@
+<app-navbar></app-navbar>
+<div class="payment-container">
+  <div class="payment-card" *ngIf="payment">
+    <h2>Pay with UPI</h2>
+    <p class="amount-display">Amount: <strong>₹{{ payment.amount | number:'1.2-2' }}</strong></p>
+    <form [formGroup]="upiForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>UPI ID</label>
+        <input type="text" formControlName="upiId" placeholder="yourname@bank">
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" routerLink="/payment/methods"
+          [state]="{ payment: payment }">Back</button>
+        <button type="submit" class="btn btn-primary" [disabled]="isLoading || upiForm.invalid">
+          {{ isLoading ? 'Processing...' : 'Pay Now' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

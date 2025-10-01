@@ -1,0 +1,106 @@
+
+
+$font-serif: 'Playfair Display', serif;
+$font-sans: 'Lato', sans-serif;
+$primary-color: #3b82f6;
+$danger-color: #ef4444;
+$gray-light: #f8f9fa;
+$text-dark: #2c3e50;
+$text-light: #7f8c8d;
+
+:host {
+  display: block;
+  background-color: #f4f7f6;
+  min-height: 100vh;
+  font-family: $font-sans;
+}
+
+.form-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  background: white;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  h1 {
+    font-family: $font-serif;
+    font-size: 2.5rem;
+    color: $text-dark;
+  }
+  p {
+    color: $text-light;
+    font-size: 1.1rem;
+  }
+}
+
+.trip-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  label {
+    font-weight: 700;
+    color: #34495e;
+    margin-bottom: 0.5rem;
+  }
+  input[type="text"], input[type="date"], input[type="number"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #bdc3c7;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.2);
+    }
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #ecf0f1;
+}
+
+.btn {
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.btn-primary {
+  background-color: $primary-color;
+  color: white;
+  &:hover { background-color: #2563eb; }
+  &:disabled { background-color: #9ca3af; cursor: not-allowed; }
+}
+
+.btn-secondary {
+  background-color: #e5e7eb;
+  color: #374151;
+  &:hover { background-color: #d1d5db; }
+}

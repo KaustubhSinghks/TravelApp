@@ -1,0 +1,63 @@
+<app-navbar></app-navbar>
+<div class="form-container">
+  <div class="form-header">
+    <h1>{{ isEditMode ? 'Edit Your Adventure' : 'Plan Your Adventure' }}</h1>
+    <p>{{ isEditMode ? 'Update the details for your trip.' : 'Fill in the details to get your next trip on the
+      calendar.' }}</p>
+  </div>
+  <form [formGroup]="tripForm" (ngSubmit)="onSubmit()" class="trip-form">
+    <div class="form-group">
+      <label for="title">Trip Title</label>
+      <input id="title" type="text" formControlName="title" placeholder="e.g., Summer Vacation in Italy"
+        [ngClass]="{ 'is-invalid': submitted && f['title'].errors }">
+      <div *ngIf="submitted && f['title'].errors" class="invalid-feedback">
+        <div *ngIf="f['title'].errors['required']">Trip title is required.</div>
+        <div *ngIf="f['title'].errors['minlength']">Title must be at least 3 characters long.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="destination">Destination</label>
+      <select id="destination" formControlName="destination"
+        [ngClass]="{ 'is-invalid': submitted && f['destination'].errors }">
+        <option value="" disabled>Select a destination</option>
+        <option *ngFor="let city of availableCities" [value]="city">{{ city | titlecase }}</option>
+      </select>
+      <div *ngIf="submitted && f['destination'].errors" class="invalid-feedback">
+        <div *ngIf="f['destination'].errors['required']">Destination is required.</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="startDate">Start Date</label>
+        <input id="startDate" type="date" formControlName="startDate"
+          [ngClass]="{ 'is-invalid': submitted && f['startDate'].errors }">
+        <div *ngIf="submitted && f['startDate'].errors" class="invalid-feedback">
+          <div *ngIf="f['startDate'].errors['required']">Start date is required.</div>
+          <div *ngIf="f['startDate'].errors['dateInPast']">Start date cannot be in the past.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="endDate">End Date</label>
+        <input id="endDate" type="date" formControlName="endDate"
+          [ngClass]="{ 'is-invalid': submitted && f['endDate'].errors }">
+        <div *ngIf="submitted && f['endDate'].errors" class="invalid-feedback">
+          <div *ngIf="f['endDate'].errors['required']">End date is required.</div>
+          <div *ngIf="f['endDate'].errors['endDateBeforeStart']">End date must be on or after the start date.</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="numPeople">Number of People</label>
+      <input id="numPeople" type="number" formControlName="numPeople"
+        [ngClass]="{ 'is-invalid': submitted && f['numPeople'].errors }">
+      <div *ngIf="submitted && f['numPeople'].errors" class="invalid-feedback">
+        <div *ngIf="f['numPeople'].errors['required']">Number of people is required.</div>
+        <div *ngIf="f['numPeople'].errors['min']">Must be at least 1.</div>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary" routerLink="/trips">Cancel</button>
+      <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Save Changes' : 'Create Trip' }}</button>
+    </div>
+  </form>
+</div>

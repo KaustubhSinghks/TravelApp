@@ -1,0 +1,32 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h3>{{ isEditMode ? 'Edit Activity' : 'Add Activity to Day ' + dayNumber }}</h3>
+    <button class="close-btn" (click)="closeModal.emit()">×</button>
+  </div>
+  <form [formGroup]="itineraryForm" (ngSubmit)="onSubmit()" class="itinerary-form">
+    <div class="form-group">
+      <label for="time">Time</label>
+      <input id="time" type="time" step="900" formControlName="time">
+    </div>
+    <div class="form-group">
+      <label for="activityType">Activity Type</label>
+      <select id="activityType" formControlName="activityType">
+        <option *ngFor="let type of activityTypes" [value]="type">{{ type | titlecase }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input id="description" type="text" formControlName="description" placeholder="e.g., Visit the Eiffel Tower">
+    </div>
+    <div class="form-group">
+      <label for="location">Location</label>
+      <input id="location" type="text" formControlName="location" placeholder="e.g., Champ de Mars, Paris">
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-secondary" (click)="closeModal.emit()">Cancel</button>
+      <button type="submit" class="btn btn-primary" [disabled]="itineraryForm.invalid">
+        {{ isEditMode ? 'Update Activity' : 'Add Activity' }}
+      </button>
+    </div>
+  </form>
+</div>

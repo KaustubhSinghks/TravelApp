@@ -1,0 +1,26 @@
+<app-navbar></app-navbar>
+<div class="payment-container">
+  <div class="payment-card success-card" *ngIf="payment">
+    <div class="success-icon">✅</div>
+    <h2>Payment Successful!</h2>
+    <p>Your booking has been confirmed. A confirmation email will be sent shortly.</p>
+
+    <div class="summary-details">
+      <h3>Payment Summary</h3>
+      <div class="detail-row">
+        <span>Amount Paid</span>
+        <span class="amount">₹{{ payment.amount | number:'1.2-2' }}</span>
+      </div>
+      <div class="detail-row">
+        <span>Payment ID</span>
+        <span>{{ payment.paymentId }}</span>
+      </div>
+      <div class="detail-row">
+        <span>Trip ID</span>
+        <span>{{ payment.tripId }}</span>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" routerLink="/home">Return to Home</button>
+  </div>
+</div>

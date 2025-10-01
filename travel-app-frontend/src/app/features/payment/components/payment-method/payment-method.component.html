@@ -1,0 +1,12 @@
+<app-navbar></app-navbar>
+<div class="payment-container">
+  <div class="payment-card" *ngIf="payment">
+    <h2>Select Payment Method</h2>
+    <p class="amount-display">Amount: <strong>₹{{ payment.amount | number:'1.2-2' }}</strong></p>
+    <div class="method-options">
+      <button class="method-btn" (click)="selectMethod('card')">💳 Credit / Debit Card</button>
+      <button class="method-btn" (click)="selectMethod('upi')">📱 UPI</button>
+      <button class="method-btn" (click)="selectMethod('netbanking')">🏦 Net Banking</button>
+    </div>
+  </div>
+</div>

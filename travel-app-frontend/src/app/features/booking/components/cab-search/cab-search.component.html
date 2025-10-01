@@ -1,0 +1,32 @@
+<div class="cab-search-container">
+  <div class="cab-results-grid">
+    <div *ngFor="let cab of cabs" class="cab-card">
+      <img [src]="cab.imageUrl" alt="{{ cab.type }} cab" class="cab-image">
+      <div class="cab-content">
+        <h3>{{ cab.type }}</h3>
+        <p class="price">₹{{ cab.pricePerDay }}<span>/day</span></p>
+        <button class="btn-book" (click)="openBookingModal(cab)">Book Now</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cab Booking Confirmation Modal -->
+<div class="modal-overlay" *ngIf="selectedCab">
+  <div class="modal-content">
+    <h3>Confirm Cab Booking</h3>
+    <p>You are booking a <strong>{{ selectedCab.type }}</strong> cab.</p>
+    <div class="form-group">
+      <label for="trip-select">Add to which trip?</label>
+      <select id="trip-select" [(ngModel)]="selectedTripId">
+        <option [ngValue]="null" disabled>Select a trip</option>
+        <option *ngFor="let trip of filteredTrips" [value]="trip.tripId">{{ trip.title }}</option>
+      </select>
+      <small *ngIf="filteredTrips.length === 0">You have no trips planned for this city.</small>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" (click)="closeBookingModal()">Cancel</button>
+      <button class="btn btn-primary" (click)="confirmBooking()" [disabled]="!selectedTripId">Confirm & Book</button>
+    </div>
+  </div>
+</div>

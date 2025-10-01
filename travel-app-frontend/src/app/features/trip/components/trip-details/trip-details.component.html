@@ -1,0 +1,84 @@
+<app-navbar></app-navbar>
+<div class="details-container" *ngIf="!isLoading && trip">
+  <header class="page-header"
+    [style.backgroundImage]="'url(assets/city-images/' + trip.destination.toLowerCase() + '/wide.png)'">
+    <div class="header-overlay">
+      <h1>{{ trip.title }}</h1>
+      <p>{{ trip.destination }} | {{ trip.startDate | date: 'mediumDate' }} - {{ trip.endDate | date: 'mediumDate' }}
+      </p>
+    </div>
+  </header>
+
+  <main class="details-content">
+    <div class="bookings-section">
+      <h2>Bookings</h2>
+      <div *ngIf="bookings.length > 0" class="bookings-grid">
+        <div *ngFor="let booking of bookings" class="booking-card">
+          <div class="booking-icon">{{ booking.bookingType.charAt(0) }}</div>
+          <div class="booking-info">
+            <h4>{{ booking.bookingType | titlecase }} Booking</h4>
+            <p *ngIf="booking.bookingType === 'HOTEL'">{{ getBookingDetails(booking).name }}</p>
+            <p *ngIf="booking.bookingType === 'CAB'">{{ getBookingDetails(booking).type }} Cab</p>
+          </div>
+          <div class="booking-amount">
+            ₹{{ booking.amount | number }} per day
+          </div>
+          <button class="btn-icon btn-delete" (click)="deleteBooking(booking.bookingId!)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div *ngIf="bookings.length === 0" class="empty-state">
+        <p>No bookings have been added to this trip yet.</p>
+        <button class="btn btn-primary" routerLink="/book">Add a Booking</button>
+      </div>
+    </div>
+
+    <div class="itinerary-section">
+      <div class="section-header">
+        <h2>Itinerary Planner</h2>
+        <button class="btn btn-primary" (click)="showItineraryForm = true">Add Activity</button>
+      </div>
+      <div class="day-tabs">
+        <button *ngFor="let day of tripDurationInDays" class="tab-link" [class.active]="selectedDay === day"
+          (click)="selectedDay = day">
+          <span class="day-number">Day {{day}}</span>
+          <span class="day-date">{{ getDateForDay(day) | date:'MMM dd' }}</span>
+        </button>
+      </div>
+      <app-itinerary-list [items]="itineraryItems" [selectedDay]="selectedDay"
+        (itemDeleted)="onItineraryItemDeleted($event)" (itemEdited)="handleEditItem($event)"> </app-itinerary-list>
+    </div>
+
+    <div class="modal-overlay" *ngIf="showItineraryForm">
+      <app-itinerary-form [tripId]="trip!.tripId!" [dayNumber]="selectedDay" [itemToEdit]="editingItineraryItem"
+        (itemAdded)="onItineraryItemAdded($event)" (itemUpdated)="onItineraryItemUpdated($event)"
+        (closeModal)="closeItineraryForm()"> </app-itinerary-form>
+    </div>
+    <div class="payment-section">
+      <h2>Payment Summary</h2>
+      <div class="price-summary">
+        <div class="price-row">
+          <span>Subtotal</span>
+          <span>₹{{ (tripTotalAmount / 1.12) | number:'1.2-2' }}</span>
+        </div>
+        <div class="price-row">
+          <span>GST (12%)</span>
+          <span>₹{{ (tripTotalAmount - (tripTotalAmount / 1.12)) | number:'1.2-2' }}</span>
+        </div>
+        <div class="price-row total">
+          <span>Total Amount</span>
+          <span>₹{{ tripTotalAmount | number:'1.2-2' }}</span>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-pay" (click)="proceedToPayment()"
+        [disabled]="isProcessingPayment || tripTotalAmount <= 0">
+        {{ isProcessingPayment ? 'Processing...' : 'Proceed to Pay' }}
+      </button>
+    </div>
+  </main>
+</div>

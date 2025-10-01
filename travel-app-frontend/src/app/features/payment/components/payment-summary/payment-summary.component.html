@@ -1,0 +1,18 @@
+<app-navbar></app-navbar>
+<div class="payment-container">
+  <div class="payment-card" *ngIf="payment && trip">
+    <h2>Payment Summary</h2>
+    <p>You are about to pay for your trip to <strong>{{ trip.destination }}</strong>.</p>
+    <div class="summary-details">
+      <div class="detail-row">
+        <span>Trip</span>
+        <span>{{ trip.title }}</span>
+      </div>
+      <div class="detail-row total">
+        <span>Amount to Pay</span>
+        <span>₹{{ payment.amount | number:'1.2-2' }}</span>
+      </div>
+    </div>
+    <button class="btn btn-primary" (click)="proceedToMethods()">Choose Payment Method</button>
+  </div>
+</div>

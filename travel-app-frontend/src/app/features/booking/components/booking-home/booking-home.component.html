@@ -1,0 +1,11 @@
+<app-navbar></app-navbar>
+<div class="booking-container">
+  <div class="booking-tabs">
+    <button class="tab-link" [class.active]="activeTab === 'hotel'" (click)="activeTab = 'hotel'">Hotels</button>
+    <button class="tab-link" [class.active]="activeTab === 'cab'" (click)="activeTab = 'cab'">Cabs</button>
+  </div>
+  <div class="booking-content">
+    <app-hotel-search *ngIf="activeTab === 'hotel'"></app-hotel-search>
+    <app-cab-search *ngIf="activeTab === 'cab'"></app-cab-search>
+  </div>
+</div>

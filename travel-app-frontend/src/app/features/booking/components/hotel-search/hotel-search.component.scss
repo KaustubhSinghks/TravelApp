@@ -1,0 +1,203 @@
+$font-serif: 'Playfair Display', serif;
+$font-sans: 'Lato', sans-serif;
+$primary-color: #3b82f6;
+$gray-light: #f8f9fa;
+$text-dark: #2c3e50;
+$text-light: #f8f9fa;
+
+.search-form {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+
+  input, select {
+    flex-grow: 1;
+    border: 1px solid #d1d5db;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.2);
+    }
+  }
+
+  button {
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    &:hover {
+      background-color: #2563eb;
+    }
+    &:disabled {
+      background-color: #9ca3af;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.hotel-results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.hotel-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  }
+}
+
+.hotel-image {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+}
+
+.hotel-content {
+  padding: 1.5rem;
+  h3 {
+    font-family: $font-serif;
+    font-size: 1.5rem;
+    color: $text-dark;
+    margin: 0 0 0.5rem 0;
+  }
+  p {
+    color: $text-light;
+    margin-bottom: 1rem;
+  }
+}
+
+.hotel-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  .rating { color: #f59e0b; }
+  .price { color: $text-dark; }
+}
+
+.btn-book {
+  width: 100%;
+  background-color: $primary-color;
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.2s ease;
+  &:hover {
+    background-color: #2563eb;
+  }
+}
+
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  grid-column: 1 / -1; // Span all columns
+  h3 { font-family: $font-serif; }
+  p { color: $text-light; }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+
+  h3 {
+    font-family: $font-serif;
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  p {
+    color: $text-light;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    label {
+        font-weight: 700;
+        color: #34495e;
+        margin-bottom: 0.5rem;
+    }
+    select {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #bdc3c7;
+        border-radius: 6px;
+        font-size: 1rem;
+    }
+    small {
+        margin-top: 0.5rem;
+        color: $text-light;
+    }
+}
+
+.btn {
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: $primary-color;
+  color: white;
+  &:hover { background-color: #2563eb; }
+  &:disabled { background-color: #9ca3af; cursor: not-allowed; }
+}
+
+.btn-secondary {
+  background-color: #e5e7eb;
+  color: #374151;
+  &:hover { background-color: #d1d5db; }
+}
