@@ -7,8 +7,6 @@ TravelAppFrontend is the client-side application for the TravelApp platform, bui
 
 ## Tech Stack
 - Angular 18
-- RxJS
-- Angular Material (if used)
 - REST API integration
 - JWT Authentication
 
